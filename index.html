@@ -1,0 +1,1520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>$GLOM | on HyperEVM</title>
+  <meta name="description" content="$GLOM – The color-changing meme coin of HyperEVM. Buy with $HYPE." />
+  <link rel="icon" type="image/png" href="favicon.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --yellow: #3ecf9a;
+      --yellow-dark: #2bb384;
+      --sky: #eafbf3;
+      --sky-light: #d3f5e6;
+      --black: #0b2b26;
+      --white: #ffffff;
+      --shadow: rgba(0, 0, 0, 0.25);
+      --hover-gradient: linear-gradient(135deg, #8ff2d1 0%, var(--yellow) 55%, var(--yellow-dark) 100%);
+      --glow: rgba(62, 207, 154, 0.65);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--black);
+      background: var(--yellow);
+      overflow-x: hidden;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    .cursive-logo {
+      font-family: 'Fredoka One', cursive;
+      color: var(--white);
+      -webkit-text-stroke: 2px var(--black);
+      text-shadow: 4px 4px 0 var(--black);
+      letter-spacing: 1px;
+      line-height: 1;
+    }
+
+    /* ---------- Navigation ---------- */
+    .navbar {
+      background: var(--yellow);
+      padding: 18px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-logo { font-size: 32px; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .nav-link {
+      font-weight: 700;
+      font-size: 15px;
+      background: var(--white);
+      border: 2px solid var(--black);
+      border-radius: 999px;
+      padding: 8px 18px;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  box-shadow 0.25s ease;
+    }
+
+    .nav-link:hover {
+      transform: translateY(-2px);
+      background: var(--hover-gradient);
+      box-shadow: 0 4px 0 var(--black), 0 0 20px 6px var(--glow);
+    }
+
+    .nav-btn {
+      background: var(--white);
+      border: 2px solid var(--black);
+      border-radius: 999px;
+      padding: 10px 22px;
+      font-weight: 800;
+      font-size: 15px;
+      cursor: pointer;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  box-shadow 0.25s ease, background 0.25s ease;
+      font-family: inherit;
+    }
+
+    .nav-btn:hover {
+      transform: translateY(-2px);
+      background: var(--hover-gradient);
+      box-shadow: 0 4px 0 var(--black), 0 0 20px 6px var(--glow);
+    }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      background: var(--sky) url("hero-bg.png") top left / cover no-repeat;
+      position: relative;
+      padding: 100px 40px 100px;
+      overflow: hidden;
+      min-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .cloud {
+      position: absolute;
+      background: #ffffff;
+      border-radius: 50%;
+      opacity: 0.95;
+      pointer-events: none;
+      will-change: transform;
+    }
+
+    .cloud::before,
+    .cloud::after {
+      content: '';
+      position: absolute;
+      background: #ffffff;
+      border-radius: 50%;
+    }
+
+    /* Gentle cloud drift — different durations & directions for natural feel */
+    @keyframes drift-slow {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(20px); }
+    }
+    @keyframes drift-slow-reverse {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(-20px); }
+    }
+
+    .cloud-1 { width: 55px; height: 18px; top: 22px; left: 0%; border-radius: 30px; opacity: 0.89; animation: drift-slow 18s ease-in-out infinite; }
+    .cloud-1::before { width: 25px; height: 25px; top: -11px; left: 9px; }
+    .cloud-1::after { width: 19px; height: 19px; top: -8px; left: 28px; }
+
+    .cloud-2 { width: 55px; height: 18px; top: 23px; left: 9%; border-radius: 30px; opacity: 0.87; animation: drift-slow-reverse 23s ease-in-out infinite; }
+    .cloud-2::before { width: 25px; height: 25px; top: -11px; left: 9px; }
+    .cloud-2::after { width: 19px; height: 19px; top: -8px; left: 28px; }
+
+    .cloud-3 { width: 85px; height: 28px; top: 52px; left: 21%; border-radius: 30px; opacity: 0.71; animation: drift-slow 16s ease-in-out infinite; }
+    .cloud-3::before { width: 39px; height: 39px; top: -18px; left: 14px; }
+    .cloud-3::after { width: 29px; height: 29px; top: -12px; left: 42px; }
+
+    .cloud-4 { width: 95px; height: 31px; top: 29px; left: 35%; border-radius: 30px; opacity: 0.85; animation: drift-slow-reverse 23s ease-in-out infinite; }
+    .cloud-4::before { width: 44px; height: 44px; top: -20px; left: 15px; }
+    .cloud-4::after { width: 32px; height: 32px; top: -13px; left: 48px; }
+
+    .cloud-5 { width: 95px; height: 31px; top: 60px; left: 48%; border-radius: 30px; opacity: 0.8; animation: drift-slow 22s ease-in-out infinite; }
+    .cloud-5::before { width: 44px; height: 44px; top: -20px; left: 15px; }
+    .cloud-5::after { width: 32px; height: 32px; top: -13px; left: 48px; }
+
+    .cloud-6 { width: 55px; height: 18px; top: 32px; left: 64%; border-radius: 30px; opacity: 0.89; animation: drift-slow-reverse 17s ease-in-out infinite; }
+    .cloud-6::before { width: 25px; height: 25px; top: -11px; left: 9px; }
+    .cloud-6::after { width: 19px; height: 19px; top: -8px; left: 28px; }
+
+    .cloud-7 { width: 75px; height: 25px; top: 42px; left: 78%; border-radius: 30px; opacity: 0.77; animation: drift-slow 18s ease-in-out infinite; }
+    .cloud-7::before { width: 34px; height: 34px; top: -15px; left: 12px; }
+    .cloud-7::after { width: 26px; height: 26px; top: -10px; left: 38px; }
+
+    .cloud-8 { width: 55px; height: 18px; top: 36px; left: 90%; border-radius: 30px; opacity: 0.72; animation: drift-slow-reverse 16s ease-in-out infinite; }
+    .cloud-8::before { width: 25px; height: 25px; top: -11px; left: 9px; }
+    .cloud-8::after { width: 19px; height: 19px; top: -8px; left: 28px; }
+
+    .cloud-9 { width: 95px; height: 31px; top: 127px; left: 9%; border-radius: 30px; opacity: 0.77; animation: drift-slow 15s ease-in-out infinite; }
+    .cloud-9::before { width: 44px; height: 44px; top: -20px; left: 15px; }
+    .cloud-9::after { width: 32px; height: 32px; top: -13px; left: 48px; }
+
+    .cloud-10 { width: 95px; height: 31px; top: 134px; left: 25%; border-radius: 30px; opacity: 0.73; animation: drift-slow-reverse 21s ease-in-out infinite; }
+    .cloud-10::before { width: 44px; height: 44px; top: -20px; left: 15px; }
+    .cloud-10::after { width: 32px; height: 32px; top: -13px; left: 48px; }
+
+    .cloud-11 { width: 75px; height: 25px; top: 140px; left: 33%; border-radius: 30px; opacity: 0.91; animation: drift-slow 24s ease-in-out infinite; }
+    .cloud-11::before { width: 34px; height: 34px; top: -15px; left: 12px; }
+    .cloud-11::after { width: 26px; height: 26px; top: -10px; left: 38px; }
+
+    .cloud-12 { width: 95px; height: 31px; top: 128px; left: 52%; border-radius: 30px; opacity: 0.75; animation: drift-slow-reverse 16s ease-in-out infinite; }
+    .cloud-12::before { width: 44px; height: 44px; top: -20px; left: 15px; }
+    .cloud-12::after { width: 32px; height: 32px; top: -13px; left: 48px; }
+
+    .cloud-13 { width: 65px; height: 21px; top: 147px; left: 59%; border-radius: 30px; opacity: 0.89; animation: drift-slow 16s ease-in-out infinite; }
+    .cloud-13::before { width: 30px; height: 30px; top: -14px; left: 10px; }
+    .cloud-13::after { width: 22px; height: 22px; top: -9px; left: 32px; }
+
+    .cloud-14 { width: 55px; height: 18px; top: 119px; left: 78%; border-radius: 30px; opacity: 0.8; animation: drift-slow-reverse 22s ease-in-out infinite; }
+    .cloud-14::before { width: 25px; height: 25px; top: -11px; left: 9px; }
+    .cloud-14::after { width: 19px; height: 19px; top: -8px; left: 28px; }
+
+    .cloud-15 { width: 65px; height: 21px; top: 128px; left: 90%; border-radius: 30px; opacity: 0.79; animation: drift-slow 18s ease-in-out infinite; }
+    .cloud-15::before { width: 30px; height: 30px; top: -14px; left: 10px; }
+    .cloud-15::after { width: 22px; height: 22px; top: -9px; left: 32px; }
+
+    .cloud-16 { width: 55px; height: 18px; top: 122px; left: 101%; border-radius: 30px; opacity: 0.85; animation: drift-slow-reverse 17s ease-in-out infinite; }
+    .cloud-16::before { width: 25px; height: 25px; top: -11px; left: 9px; }
+    .cloud-16::after { width: 19px; height: 19px; top: -8px; left: 28px; }
+
+    .cloud-17 { width: 65px; height: 21px; top: 246px; left: -1%; border-radius: 30px; opacity: 0.74; animation: drift-slow 21s ease-in-out infinite; }
+    .cloud-17::before { width: 30px; height: 30px; top: -14px; left: 10px; }
+    .cloud-17::after { width: 22px; height: 22px; top: -9px; left: 32px; }
+
+    .cloud-18 { width: 95px; height: 31px; top: 240px; left: 10%; border-radius: 30px; opacity: 0.75; animation: drift-slow-reverse 20s ease-in-out infinite; }
+    .cloud-18::before { width: 44px; height: 44px; top: -20px; left: 15px; }
+    .cloud-18::after { width: 32px; height: 32px; top: -13px; left: 48px; }
+
+    .cloud-19 { width: 55px; height: 18px; top: 249px; left: 27%; border-radius: 30px; opacity: 0.76; animation: drift-slow 15s ease-in-out infinite; }
+    .cloud-19::before { width: 25px; height: 25px; top: -11px; left: 9px; }
+    .cloud-19::after { width: 19px; height: 19px; top: -8px; left: 28px; }
+
+    .cloud-20 { width: 85px; height: 28px; top: 220px; left: 40%; border-radius: 30px; opacity: 0.77; animation: drift-slow-reverse 18s ease-in-out infinite; }
+    .cloud-20::before { width: 39px; height: 39px; top: -18px; left: 14px; }
+    .cloud-20::after { width: 29px; height: 29px; top: -12px; left: 42px; }
+
+    .cloud-21 { width: 75px; height: 25px; top: 245px; left: 51%; border-radius: 30px; opacity: 0.75; animation: drift-slow 22s ease-in-out infinite; }
+    .cloud-21::before { width: 34px; height: 34px; top: -15px; left: 12px; }
+    .cloud-21::after { width: 26px; height: 26px; top: -10px; left: 38px; }
+
+    .cloud-22 { width: 85px; height: 28px; top: 241px; left: 63%; border-radius: 30px; opacity: 0.74; animation: drift-slow-reverse 17s ease-in-out infinite; }
+    .cloud-22::before { width: 39px; height: 39px; top: -18px; left: 14px; }
+    .cloud-22::after { width: 29px; height: 29px; top: -12px; left: 42px; }
+
+    .cloud-23 { width: 95px; height: 31px; top: 247px; left: 74%; border-radius: 30px; opacity: 0.83; animation: drift-slow 24s ease-in-out infinite; }
+    .cloud-23::before { width: 44px; height: 44px; top: -20px; left: 15px; }
+    .cloud-23::after { width: 32px; height: 32px; top: -13px; left: 48px; }
+
+    .cloud-24 { width: 85px; height: 28px; top: 237px; left: 87%; border-radius: 30px; opacity: 0.79; animation: drift-slow-reverse 17s ease-in-out infinite; }
+    .cloud-24::before { width: 39px; height: 39px; top: -18px; left: 14px; }
+    .cloud-24::after { width: 29px; height: 29px; top: -12px; left: 42px; }
+
+    .cloud-25 { width: 55px; height: 18px; top: 326px; left: 11%; border-radius: 30px; opacity: 0.89; animation: drift-slow 16s ease-in-out infinite; }
+    .cloud-25::before { width: 25px; height: 25px; top: -11px; left: 9px; }
+    .cloud-25::after { width: 19px; height: 19px; top: -8px; left: 28px; }
+
+    .cloud-26 { width: 65px; height: 21px; top: 335px; left: 21%; border-radius: 30px; opacity: 0.9; animation: drift-slow-reverse 21s ease-in-out infinite; }
+    .cloud-26::before { width: 30px; height: 30px; top: -14px; left: 10px; }
+    .cloud-26::after { width: 22px; height: 22px; top: -9px; left: 32px; }
+
+    .cloud-27 { width: 85px; height: 28px; top: 299px; left: 37%; border-radius: 30px; opacity: 0.8; animation: drift-slow 22s ease-in-out infinite; }
+    .cloud-27::before { width: 39px; height: 39px; top: -18px; left: 14px; }
+    .cloud-27::after { width: 29px; height: 29px; top: -12px; left: 42px; }
+
+    .cloud-28 { width: 95px; height: 31px; top: 311px; left: 50%; border-radius: 30px; opacity: 0.92; animation: drift-slow-reverse 15s ease-in-out infinite; }
+    .cloud-28::before { width: 44px; height: 44px; top: -20px; left: 15px; }
+    .cloud-28::after { width: 32px; height: 32px; top: -13px; left: 48px; }
+
+    .cloud-29 { width: 55px; height: 18px; top: 341px; left: 64%; border-radius: 30px; opacity: 0.87; animation: drift-slow 23s ease-in-out infinite; }
+    .cloud-29::before { width: 25px; height: 25px; top: -11px; left: 9px; }
+    .cloud-29::after { width: 19px; height: 19px; top: -8px; left: 28px; }
+
+    .cloud-30 { width: 75px; height: 25px; top: 312px; left: 78%; border-radius: 30px; opacity: 0.73; animation: drift-slow-reverse 21s ease-in-out infinite; }
+    .cloud-30::before { width: 34px; height: 34px; top: -15px; left: 12px; }
+    .cloud-30::after { width: 26px; height: 26px; top: -10px; left: 38px; }
+
+    .cloud-31 { width: 55px; height: 18px; top: 324px; left: 86%; border-radius: 30px; opacity: 0.94; animation: drift-slow 19s ease-in-out infinite; }
+    .cloud-31::before { width: 25px; height: 25px; top: -11px; left: 9px; }
+    .cloud-31::after { width: 19px; height: 19px; top: -8px; left: 28px; }
+
+    .cloud-32 { width: 65px; height: 21px; top: 343px; left: 100%; border-radius: 30px; opacity: 0.83; animation: drift-slow-reverse 16s ease-in-out infinite; }
+    .cloud-32::before { width: 30px; height: 30px; top: -14px; left: 10px; }
+    .cloud-32::after { width: 22px; height: 22px; top: -9px; left: 32px; }
+
+    .cloud-33 { width: 75px; height: 25px; top: 430px; left: 1%; border-radius: 30px; opacity: 0.91; animation: drift-slow 23s ease-in-out infinite; }
+    .cloud-33::before { width: 34px; height: 34px; top: -15px; left: 12px; }
+    .cloud-33::after { width: 26px; height: 26px; top: -10px; left: 38px; }
+
+    .cloud-34 { width: 65px; height: 21px; top: 402px; left: 12%; border-radius: 30px; opacity: 0.79; animation: drift-slow-reverse 17s ease-in-out infinite; }
+    .cloud-34::before { width: 30px; height: 30px; top: -14px; left: 10px; }
+    .cloud-34::after { width: 22px; height: 22px; top: -9px; left: 32px; }
+
+    .cloud-35 { width: 95px; height: 31px; top: 439px; left: 25%; border-radius: 30px; opacity: 0.93; animation: drift-slow 24s ease-in-out infinite; }
+    .cloud-35::before { width: 44px; height: 44px; top: -20px; left: 15px; }
+    .cloud-35::after { width: 32px; height: 32px; top: -13px; left: 48px; }
+
+    .cloud-36 { width: 55px; height: 18px; top: 421px; left: 36%; border-radius: 30px; opacity: 0.73; animation: drift-slow-reverse 20s ease-in-out infinite; }
+    .cloud-36::before { width: 25px; height: 25px; top: -11px; left: 9px; }
+    .cloud-36::after { width: 19px; height: 19px; top: -8px; left: 28px; }
+
+    .cloud-37 { width: 65px; height: 21px; top: 409px; left: 53%; border-radius: 30px; opacity: 0.71; animation: drift-slow 24s ease-in-out infinite; }
+    .cloud-37::before { width: 30px; height: 30px; top: -14px; left: 10px; }
+    .cloud-37::after { width: 22px; height: 22px; top: -9px; left: 32px; }
+
+    .cloud-38 { width: 85px; height: 28px; top: 395px; left: 60%; border-radius: 30px; opacity: 0.9; animation: drift-slow-reverse 23s ease-in-out infinite; }
+    .cloud-38::before { width: 39px; height: 39px; top: -18px; left: 14px; }
+    .cloud-38::after { width: 29px; height: 29px; top: -12px; left: 42px; }
+
+    .cloud-39 { width: 65px; height: 21px; top: 398px; left: 79%; border-radius: 30px; opacity: 0.86; animation: drift-slow 23s ease-in-out infinite; }
+    .cloud-39::before { width: 30px; height: 30px; top: -14px; left: 10px; }
+    .cloud-39::after { width: 22px; height: 22px; top: -9px; left: 32px; }
+
+    .cloud-40 { width: 95px; height: 31px; top: 406px; left: 85%; border-radius: 30px; opacity: 0.92; animation: drift-slow-reverse 21s ease-in-out infinite; }
+    .cloud-40::before { width: 44px; height: 44px; top: -20px; left: 15px; }
+    .cloud-40::after { width: 32px; height: 32px; top: -13px; left: 48px; }
+
+    .cloud-41 { width: 65px; height: 21px; top: 499px; left: 8%; border-radius: 30px; opacity: 0.88; animation: drift-slow 21s ease-in-out infinite; }
+    .cloud-41::before { width: 30px; height: 30px; top: -14px; left: 10px; }
+    .cloud-41::after { width: 22px; height: 22px; top: -9px; left: 32px; }
+
+    .cloud-42 { width: 75px; height: 25px; top: 506px; left: 25%; border-radius: 30px; opacity: 0.81; animation: drift-slow-reverse 23s ease-in-out infinite; }
+    .cloud-42::before { width: 34px; height: 34px; top: -15px; left: 12px; }
+    .cloud-42::after { width: 26px; height: 26px; top: -10px; left: 38px; }
+
+    .cloud-43 { width: 65px; height: 21px; top: 472px; left: 36%; border-radius: 30px; opacity: 0.76; animation: drift-slow 20s ease-in-out infinite; }
+    .cloud-43::before { width: 30px; height: 30px; top: -14px; left: 10px; }
+    .cloud-43::after { width: 22px; height: 22px; top: -9px; left: 32px; }
+
+    .cloud-44 { width: 95px; height: 31px; top: 502px; left: 46%; border-radius: 30px; opacity: 0.76; animation: drift-slow-reverse 18s ease-in-out infinite; }
+    .cloud-44::before { width: 44px; height: 44px; top: -20px; left: 15px; }
+    .cloud-44::after { width: 32px; height: 32px; top: -13px; left: 48px; }
+
+    .cloud-45 { width: 55px; height: 18px; top: 469px; left: 59%; border-radius: 30px; opacity: 0.76; animation: drift-slow 15s ease-in-out infinite; }
+    .cloud-45::before { width: 25px; height: 25px; top: -11px; left: 9px; }
+    .cloud-45::after { width: 19px; height: 19px; top: -8px; left: 28px; }
+
+    .cloud-46 { width: 55px; height: 18px; top: 486px; left: 78%; border-radius: 30px; opacity: 0.83; animation: drift-slow-reverse 19s ease-in-out infinite; }
+    .cloud-46::before { width: 25px; height: 25px; top: -11px; left: 9px; }
+    .cloud-46::after { width: 19px; height: 19px; top: -8px; left: 28px; }
+
+    .cloud-47 { width: 65px; height: 21px; top: 496px; left: 90%; border-radius: 30px; opacity: 0.83; animation: drift-slow 24s ease-in-out infinite; }
+    .cloud-47::before { width: 30px; height: 30px; top: -14px; left: 10px; }
+    .cloud-47::after { width: 22px; height: 22px; top: -9px; left: 32px; }
+
+    .cloud-48 { width: 65px; height: 21px; top: 495px; left: 100%; border-radius: 30px; opacity: 0.9; animation: drift-slow-reverse 21s ease-in-out infinite; }
+    .cloud-48::before { width: 30px; height: 30px; top: -14px; left: 10px; }
+    .cloud-48::after { width: 22px; height: 22px; top: -9px; left: 32px; }
+
+    .cloud-49 { width: 55px; height: 18px; top: 590px; left: 0%; border-radius: 30px; opacity: 0.89; animation: drift-slow 18s ease-in-out infinite; }
+    .cloud-49::before { width: 25px; height: 25px; top: -11px; left: 9px; }
+    .cloud-49::after { width: 19px; height: 19px; top: -8px; left: 28px; }
+
+    .cloud-50 { width: 55px; height: 18px; top: 590px; left: 9%; border-radius: 30px; opacity: 0.87; animation: drift-slow-reverse 23s ease-in-out infinite; }
+    .cloud-50::before { width: 25px; height: 25px; top: -11px; left: 9px; }
+    .cloud-50::after { width: 19px; height: 19px; top: -8px; left: 28px; }
+
+    .cloud-51 { width: 85px; height: 28px; top: 590px; left: 21%; border-radius: 30px; opacity: 0.71; animation: drift-slow 16s ease-in-out infinite; }
+    .cloud-51::before { width: 39px; height: 39px; top: -18px; left: 14px; }
+    .cloud-51::after { width: 29px; height: 29px; top: -12px; left: 42px; }
+
+    .cloud-52 { width: 95px; height: 31px; top: 590px; left: 35%; border-radius: 30px; opacity: 0.85; animation: drift-slow-reverse 23s ease-in-out infinite; }
+    .cloud-52::before { width: 44px; height: 44px; top: -20px; left: 15px; }
+    .cloud-52::after { width: 32px; height: 32px; top: -13px; left: 48px; }
+
+    .cloud-53 { width: 95px; height: 31px; top: 590px; left: 48%; border-radius: 30px; opacity: 0.8; animation: drift-slow 22s ease-in-out infinite; }
+    .cloud-53::before { width: 44px; height: 44px; top: -20px; left: 15px; }
+    .cloud-53::after { width: 32px; height: 32px; top: -13px; left: 48px; }
+
+    .cloud-54 { width: 55px; height: 18px; top: 590px; left: 64%; border-radius: 30px; opacity: 0.89; animation: drift-slow-reverse 17s ease-in-out infinite; }
+    .cloud-54::before { width: 25px; height: 25px; top: -11px; left: 9px; }
+    .cloud-54::after { width: 19px; height: 19px; top: -8px; left: 28px; }
+
+    .cloud-55 { width: 75px; height: 25px; top: 590px; left: 78%; border-radius: 30px; opacity: 0.77; animation: drift-slow 18s ease-in-out infinite; }
+    .cloud-55::before { width: 34px; height: 34px; top: -15px; left: 12px; }
+    .cloud-55::after { width: 26px; height: 26px; top: -10px; left: 38px; }
+
+    .cloud-56 { width: 55px; height: 18px; top: 590px; left: 90%; border-radius: 30px; opacity: 0.72; animation: drift-slow-reverse 16s ease-in-out infinite; }
+    .cloud-56::before { width: 25px; height: 25px; top: -11px; left: 9px; }
+    .cloud-56::after { width: 19px; height: 19px; top: -8px; left: 28px; }
+
+    .cloud-57 { width: 95px; height: 31px; top: 670px; left: 9%; border-radius: 30px; opacity: 0.77; animation: drift-slow 15s ease-in-out infinite; }
+    .cloud-57::before { width: 44px; height: 44px; top: -20px; left: 15px; }
+    .cloud-57::after { width: 32px; height: 32px; top: -13px; left: 48px; }
+
+    .cloud-58 { width: 95px; height: 31px; top: 670px; left: 25%; border-radius: 30px; opacity: 0.73; animation: drift-slow-reverse 21s ease-in-out infinite; }
+    .cloud-58::before { width: 44px; height: 44px; top: -20px; left: 15px; }
+    .cloud-58::after { width: 32px; height: 32px; top: -13px; left: 48px; }
+
+    .cloud-59 { width: 75px; height: 25px; top: 670px; left: 33%; border-radius: 30px; opacity: 0.91; animation: drift-slow 24s ease-in-out infinite; }
+    .cloud-59::before { width: 34px; height: 34px; top: -15px; left: 12px; }
+    .cloud-59::after { width: 26px; height: 26px; top: -10px; left: 38px; }
+
+    .cloud-60 { width: 95px; height: 31px; top: 670px; left: 52%; border-radius: 30px; opacity: 0.75; animation: drift-slow-reverse 16s ease-in-out infinite; }
+    .cloud-60::before { width: 44px; height: 44px; top: -20px; left: 15px; }
+    .cloud-60::after { width: 32px; height: 32px; top: -13px; left: 48px; }
+
+    .cloud-61 { width: 65px; height: 21px; top: 670px; left: 59%; border-radius: 30px; opacity: 0.89; animation: drift-slow 16s ease-in-out infinite; }
+    .cloud-61::before { width: 30px; height: 30px; top: -14px; left: 10px; }
+    .cloud-61::after { width: 22px; height: 22px; top: -9px; left: 32px; }
+
+    .cloud-62 { width: 55px; height: 18px; top: 670px; left: 78%; border-radius: 30px; opacity: 0.8; animation: drift-slow-reverse 22s ease-in-out infinite; }
+    .cloud-62::before { width: 25px; height: 25px; top: -11px; left: 9px; }
+    .cloud-62::after { width: 19px; height: 19px; top: -8px; left: 28px; }
+
+    .cloud-63 { width: 65px; height: 21px; top: 670px; left: 90%; border-radius: 30px; opacity: 0.79; animation: drift-slow 18s ease-in-out infinite; }
+    .cloud-63::before { width: 30px; height: 30px; top: -14px; left: 10px; }
+    .cloud-63::after { width: 22px; height: 22px; top: -9px; left: 32px; }
+
+    .cloud-64 { width: 55px; height: 18px; top: 670px; left: 101%; border-radius: 30px; opacity: 0.85; animation: drift-slow-reverse 17s ease-in-out infinite; }
+    .cloud-64::before { width: 25px; height: 25px; top: -11px; left: 9px; }
+    .cloud-64::after { width: 19px; height: 19px; top: -8px; left: 28px; }
+
+    .cloud-65 { width: 55px; height: 18px; top: 750px; left: 0%; border-radius: 30px; opacity: 0.89; animation: drift-slow 18s ease-in-out infinite; }
+    .cloud-65::before { width: 25px; height: 25px; top: -11px; left: 9px; }
+    .cloud-65::after { width: 19px; height: 19px; top: -8px; left: 28px; }
+
+    .cloud-66 { width: 55px; height: 18px; top: 750px; left: 9%; border-radius: 30px; opacity: 0.87; animation: drift-slow-reverse 23s ease-in-out infinite; }
+    .cloud-66::before { width: 25px; height: 25px; top: -11px; left: 9px; }
+    .cloud-66::after { width: 19px; height: 19px; top: -8px; left: 28px; }
+
+    .cloud-67 { width: 85px; height: 28px; top: 750px; left: 21%; border-radius: 30px; opacity: 0.71; animation: drift-slow 16s ease-in-out infinite; }
+    .cloud-67::before { width: 39px; height: 39px; top: -18px; left: 14px; }
+    .cloud-67::after { width: 29px; height: 29px; top: -12px; left: 42px; }
+
+    .cloud-68 { width: 95px; height: 31px; top: 750px; left: 35%; border-radius: 30px; opacity: 0.85; animation: drift-slow-reverse 23s ease-in-out infinite; }
+    .cloud-68::before { width: 44px; height: 44px; top: -20px; left: 15px; }
+    .cloud-68::after { width: 32px; height: 32px; top: -13px; left: 48px; }
+
+    .cloud-69 { width: 95px; height: 31px; top: 750px; left: 48%; border-radius: 30px; opacity: 0.8; animation: drift-slow 22s ease-in-out infinite; }
+    .cloud-69::before { width: 44px; height: 44px; top: -20px; left: 15px; }
+    .cloud-69::after { width: 32px; height: 32px; top: -13px; left: 48px; }
+
+    .cloud-70 { width: 55px; height: 18px; top: 750px; left: 64%; border-radius: 30px; opacity: 0.89; animation: drift-slow-reverse 17s ease-in-out infinite; }
+    .cloud-70::before { width: 25px; height: 25px; top: -11px; left: 9px; }
+    .cloud-70::after { width: 19px; height: 19px; top: -8px; left: 28px; }
+
+    .cloud-71 { width: 75px; height: 25px; top: 750px; left: 78%; border-radius: 30px; opacity: 0.77; animation: drift-slow 18s ease-in-out infinite; }
+    .cloud-71::before { width: 34px; height: 34px; top: -15px; left: 12px; }
+    .cloud-71::after { width: 26px; height: 26px; top: -10px; left: 38px; }
+
+    .cloud-72 { width: 55px; height: 18px; top: 750px; left: 90%; border-radius: 30px; opacity: 0.72; animation: drift-slow-reverse 16s ease-in-out infinite; }
+    .cloud-72::before { width: 25px; height: 25px; top: -11px; left: 9px; }
+    .cloud-72::after { width: 19px; height: 19px; top: -8px; left: 28px; }
+
+    .cloud-73 { width: 95px; height: 31px; top: 830px; left: 9%; border-radius: 30px; opacity: 0.77; animation: drift-slow 15s ease-in-out infinite; }
+    .cloud-73::before { width: 44px; height: 44px; top: -20px; left: 15px; }
+    .cloud-73::after { width: 32px; height: 32px; top: -13px; left: 48px; }
+
+    .cloud-74 { width: 95px; height: 31px; top: 830px; left: 25%; border-radius: 30px; opacity: 0.73; animation: drift-slow-reverse 21s ease-in-out infinite; }
+    .cloud-74::before { width: 44px; height: 44px; top: -20px; left: 15px; }
+    .cloud-74::after { width: 32px; height: 32px; top: -13px; left: 48px; }
+
+    .cloud-75 { width: 75px; height: 25px; top: 830px; left: 33%; border-radius: 30px; opacity: 0.91; animation: drift-slow 24s ease-in-out infinite; }
+    .cloud-75::before { width: 34px; height: 34px; top: -15px; left: 12px; }
+    .cloud-75::after { width: 26px; height: 26px; top: -10px; left: 38px; }
+
+    .cloud-76 { width: 95px; height: 31px; top: 830px; left: 52%; border-radius: 30px; opacity: 0.75; animation: drift-slow-reverse 16s ease-in-out infinite; }
+    .cloud-76::before { width: 44px; height: 44px; top: -20px; left: 15px; }
+    .cloud-76::after { width: 32px; height: 32px; top: -13px; left: 48px; }
+
+    .cloud-77 { width: 65px; height: 21px; top: 830px; left: 59%; border-radius: 30px; opacity: 0.89; animation: drift-slow 16s ease-in-out infinite; }
+    .cloud-77::before { width: 30px; height: 30px; top: -14px; left: 10px; }
+    .cloud-77::after { width: 22px; height: 22px; top: -9px; left: 32px; }
+
+    .cloud-78 { width: 55px; height: 18px; top: 830px; left: 78%; border-radius: 30px; opacity: 0.8; animation: drift-slow-reverse 22s ease-in-out infinite; }
+    .cloud-78::before { width: 25px; height: 25px; top: -11px; left: 9px; }
+    .cloud-78::after { width: 19px; height: 19px; top: -8px; left: 28px; }
+
+    .cloud-79 { width: 65px; height: 21px; top: 830px; left: 90%; border-radius: 30px; opacity: 0.79; animation: drift-slow 18s ease-in-out infinite; }
+    .cloud-79::before { width: 30px; height: 30px; top: -14px; left: 10px; }
+    .cloud-79::after { width: 22px; height: 22px; top: -9px; left: 32px; }
+
+    .cloud-80 { width: 55px; height: 18px; top: 830px; left: 101%; border-radius: 30px; opacity: 0.85; animation: drift-slow-reverse 17s ease-in-out infinite; }
+    .cloud-80::before { width: 25px; height: 25px; top: -11px; left: 9px; }
+    .cloud-80::after { width: 19px; height: 19px; top: -8px; left: 28px; }
+
+    .cloud-81 { width: 55px; height: 18px; top: 910px; left: 0%; border-radius: 30px; opacity: 0.89; animation: drift-slow 18s ease-in-out infinite; }
+    .cloud-81::before { width: 25px; height: 25px; top: -11px; left: 9px; }
+    .cloud-81::after { width: 19px; height: 19px; top: -8px; left: 28px; }
+
+    .cloud-82 { width: 55px; height: 18px; top: 910px; left: 9%; border-radius: 30px; opacity: 0.87; animation: drift-slow-reverse 23s ease-in-out infinite; }
+    .cloud-82::before { width: 25px; height: 25px; top: -11px; left: 9px; }
+    .cloud-82::after { width: 19px; height: 19px; top: -8px; left: 28px; }
+
+    .cloud-83 { width: 85px; height: 28px; top: 910px; left: 21%; border-radius: 30px; opacity: 0.71; animation: drift-slow 16s ease-in-out infinite; }
+    .cloud-83::before { width: 39px; height: 39px; top: -18px; left: 14px; }
+    .cloud-83::after { width: 29px; height: 29px; top: -12px; left: 42px; }
+
+    .cloud-84 { width: 95px; height: 31px; top: 910px; left: 35%; border-radius: 30px; opacity: 0.85; animation: drift-slow-reverse 23s ease-in-out infinite; }
+    .cloud-84::before { width: 44px; height: 44px; top: -20px; left: 15px; }
+    .cloud-84::after { width: 32px; height: 32px; top: -13px; left: 48px; }
+
+    .cloud-85 { width: 95px; height: 31px; top: 910px; left: 48%; border-radius: 30px; opacity: 0.8; animation: drift-slow 22s ease-in-out infinite; }
+    .cloud-85::before { width: 44px; height: 44px; top: -20px; left: 15px; }
+    .cloud-85::after { width: 32px; height: 32px; top: -13px; left: 48px; }
+
+    .cloud-86 { width: 55px; height: 18px; top: 910px; left: 64%; border-radius: 30px; opacity: 0.89; animation: drift-slow-reverse 17s ease-in-out infinite; }
+    .cloud-86::before { width: 25px; height: 25px; top: -11px; left: 9px; }
+    .cloud-86::after { width: 19px; height: 19px; top: -8px; left: 28px; }
+
+    .cloud-87 { width: 75px; height: 25px; top: 910px; left: 78%; border-radius: 30px; opacity: 0.77; animation: drift-slow 18s ease-in-out infinite; }
+    .cloud-87::before { width: 34px; height: 34px; top: -15px; left: 12px; }
+    .cloud-87::after { width: 26px; height: 26px; top: -10px; left: 38px; }
+
+    .cloud-88 { width: 55px; height: 18px; top: 910px; left: 90%; border-radius: 30px; opacity: 0.72; animation: drift-slow-reverse 16s ease-in-out infinite; }
+    .cloud-88::before { width: 25px; height: 25px; top: -11px; left: 9px; }
+    .cloud-88::after { width: 19px; height: 19px; top: -8px; left: 28px; }
+
+    .cloud-89 { width: 95px; height: 31px; top: 990px; left: 9%; border-radius: 30px; opacity: 0.77; animation: drift-slow 15s ease-in-out infinite; }
+    .cloud-89::before { width: 44px; height: 44px; top: -20px; left: 15px; }
+    .cloud-89::after { width: 32px; height: 32px; top: -13px; left: 48px; }
+
+    .cloud-90 { width: 95px; height: 31px; top: 990px; left: 25%; border-radius: 30px; opacity: 0.73; animation: drift-slow-reverse 21s ease-in-out infinite; }
+    .cloud-90::before { width: 44px; height: 44px; top: -20px; left: 15px; }
+    .cloud-90::after { width: 32px; height: 32px; top: -13px; left: 48px; }
+
+    .cloud-91 { width: 75px; height: 25px; top: 990px; left: 33%; border-radius: 30px; opacity: 0.91; animation: drift-slow 24s ease-in-out infinite; }
+    .cloud-91::before { width: 34px; height: 34px; top: -15px; left: 12px; }
+    .cloud-91::after { width: 26px; height: 26px; top: -10px; left: 38px; }
+
+    .cloud-92 { width: 95px; height: 31px; top: 990px; left: 52%; border-radius: 30px; opacity: 0.75; animation: drift-slow-reverse 16s ease-in-out infinite; }
+    .cloud-92::before { width: 44px; height: 44px; top: -20px; left: 15px; }
+    .cloud-92::after { width: 32px; height: 32px; top: -13px; left: 48px; }
+
+    .cloud-93 { width: 65px; height: 21px; top: 990px; left: 59%; border-radius: 30px; opacity: 0.89; animation: drift-slow 16s ease-in-out infinite; }
+    .cloud-93::before { width: 30px; height: 30px; top: -14px; left: 10px; }
+    .cloud-93::after { width: 22px; height: 22px; top: -9px; left: 32px; }
+
+    .cloud-94 { width: 55px; height: 18px; top: 990px; left: 78%; border-radius: 30px; opacity: 0.8; animation: drift-slow-reverse 22s ease-in-out infinite; }
+    .cloud-94::before { width: 25px; height: 25px; top: -11px; left: 9px; }
+    .cloud-94::after { width: 19px; height: 19px; top: -8px; left: 28px; }
+
+    .cloud-95 { width: 65px; height: 21px; top: 990px; left: 90%; border-radius: 30px; opacity: 0.79; animation: drift-slow 18s ease-in-out infinite; }
+    .cloud-95::before { width: 30px; height: 30px; top: -14px; left: 10px; }
+    .cloud-95::after { width: 22px; height: 22px; top: -9px; left: 32px; }
+
+    .cloud-96 { width: 55px; height: 18px; top: 990px; left: 101%; border-radius: 30px; opacity: 0.85; animation: drift-slow-reverse 17s ease-in-out infinite; }
+    .cloud-96::before { width: 25px; height: 25px; top: -11px; left: 9px; }
+    .cloud-96::after { width: 19px; height: 19px; top: -8px; left: 28px; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /* ---------- Hero content ---------- */
+    .hero-content {
+      max-width: 600px;
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero-logo {
+      font-size: 120px;
+      margin-bottom: 24px;
+      text-shadow: 6px 6px 0 var(--black);
+      -webkit-text-stroke: 3px var(--black);
+    }
+
+    .hero-tagline {
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    .hero-subtagline {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      opacity: 0.75;
+      margin-bottom: 28px;
+    }
+
+    .address-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--black);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 6px 6px 6px 22px;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      margin-bottom: 28px;
+      max-width: 100%;
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .address-pill:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    /* Shimmer sweep across address pill */
+    .address-pill::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.12),
+        transparent
+      );
+      animation: shimmer 4s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes shimmer {
+      0% { left: -60%; }
+      50%, 100% { left: 110%; }
+    }
+
+    .address-text {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 320px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .copy-btn {
+      background: var(--yellow);
+      color: var(--black);
+      border: none;
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-weight: 800;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.2s ease, transform 0.15s ease;
+      font-family: inherit;
+      position: relative;
+      z-index: 1;
+    }
+
+    .copy-btn:hover {
+      background: var(--hover-gradient);
+      transform: scale(1.05);
+      box-shadow: 0 0 18px 6px var(--glow);
+    }
+
+    .copy-btn.copied { background: #4ade80; }
+
+    .hero-buttons {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 2px solid var(--black);
+      border-radius: 999px;
+      padding: 14px 28px;
+      font-weight: 800;
+      font-size: 16px;
+      cursor: pointer;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  box-shadow 0.25s ease, background 0.25s ease;
+      font-family: inherit;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+      );
+      transition: left 0.6s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 0 var(--black), 0 0 24px 8px var(--glow);
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    .btn:active {
+      transform: translateY(1px);
+      box-shadow: 0 2px 0 var(--black);
+    }
+
+    .btn-yellow { background: var(--yellow); color: var(--black); }
+    .btn-white { background: var(--white); color: var(--black); }
+    .btn-black { background: var(--black); color: var(--white); }
+
+    .btn-yellow:hover,
+    .btn-white:hover { background: var(--hover-gradient); }
+
+    /* Hero character */
+    .hero-character {
+      position: relative;
+      width: 340px;
+      max-width: 60vw;
+      margin: 40px auto 0;
+      z-index: 1;
+    }
+
+    @keyframes frameGlow {
+      0%, 100% {
+        box-shadow: 8px 8px 0 var(--black), 0 0 0 0 rgba(62, 207, 154, 0.6);
+      }
+      50% {
+        box-shadow: 8px 8px 0 var(--black), 0 0 26px 8px rgba(62, 207, 154, 0.6);
+      }
+    }
+
+    .hero-character img {
+      width: 100%;
+      height: auto;
+      display: block;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 20px;
+      border: 4px solid var(--black);
+      background: var(--white);
+      animation: frameGlow 2.6s ease-in-out infinite;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      cursor: pointer;
+    }
+
+    .hero-character img:hover {
+      animation-play-state: paused;
+      transform: scale(1.04);
+      box-shadow: 8px 8px 0 var(--black), 0 0 40px 14px var(--glow);
+    }
+
+    .hero-wave {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 120px;
+      z-index: 3;
+    }
+
+    /* ---------- Memes Section ---------- */
+    .memes-section {
+      background: var(--white);
+      padding: 80px 40px 100px;
+      text-align: center;
+    }
+
+    .memes-title {
+      font-size: 96px;
+      margin-bottom: 60px;
+      display: inline-block;
+    }
+
+    .memes-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .meme-card {
+      border-radius: 16px;
+      overflow: hidden;
+      border: 3px solid var(--black);
+      box-shadow: 6px 6px 0 var(--black);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  box-shadow 0.3s ease;
+      aspect-ratio: 1 / 1;
+      background: var(--white);
+      cursor: pointer;
+    }
+
+    /* Alternating tilt on hover for playful asymmetry */
+    .meme-card:hover {
+      transform: translate(-4px, -4px) rotate(-1.5deg);
+      box-shadow: 12px 12px 0 var(--black), 0 0 30px 10px var(--glow);
+    }
+
+    .meme-card:nth-child(even):hover {
+      transform: translate(-4px, -4px) rotate(1.5deg);
+    }
+
+    .meme-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .meme-card:hover img {
+      transform: scale(1.05);
+    }
+
+    /* ---------- Tokenomics Section ---------- */
+    .tokenomics-section {
+      background: var(--yellow) url("tokenomics-bg.png") center center / cover no-repeat;
+      padding: 80px 40px 100px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tokenomics-stack {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .tokenomics-title {
+      font-size: 84px;
+      margin-bottom: 26px;
+      display: block;
+      text-align: center;
+    }
+
+    .ca-row {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--black);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 8px 8px 8px 24px;
+      font-family: 'Courier New', monospace;
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 60px;
+      max-width: 100%;
+    }
+
+    .ca-label {
+      font-family: 'Inter', sans-serif;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .ca-address {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 240px;
+    }
+
+    .tokenomics-content {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 70px;
+      max-width: 1000px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+    }
+
+    .tokenomics-card {
+      background: var(--white);
+      border: 4px solid var(--black);
+      border-radius: 26px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      box-shadow: 8px 8px 0 var(--black);
+      width: 360px;
+      max-width: 100%;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  box-shadow 0.25s ease;
+    }
+
+    .tokenomics-card:hover {
+      transform: translate(-5px, -5px) rotate(-1deg);
+      box-shadow: 13px 13px 0 var(--black);
+    }
+
+    .token-pill {
+      background: var(--yellow);
+      border: 3px solid var(--black);
+      border-radius: 999px;
+      padding: 16px 24px;
+      font-weight: 800;
+      font-size: 16px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--black);
+    }
+
+    .tokenomics-character {
+      width: 320px;
+      max-width: 100%;
+    }
+
+    .tokenomics-character img {
+      width: 100%;
+      height: auto;
+      display: block;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 20px;
+      border: 4px solid var(--black);
+      background: var(--white);
+      animation: frameGlow 2.6s ease-in-out infinite;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      cursor: pointer;
+    }
+
+    .tokenomics-character img:hover {
+      animation-play-state: paused;
+      transform: scale(1.04);
+      box-shadow: 8px 8px 0 var(--black), 0 0 40px 14px var(--glow);
+    }
+
+    /* ---------- Roadmap Section ---------- */
+    .roadmap-section {
+      background: var(--white) url("roadmap-bg.png") center center / cover no-repeat;
+      padding: 80px 40px 70px;
+      text-align: center;
+      position: relative;
+    }
+
+
+    .roadmap-title {
+      font-size: 84px;
+      margin-bottom: 70px;
+      display: inline-block;
+    }
+
+    .roadmap-phases {
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      gap: 40px;
+      max-width: 1100px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+    }
+
+    .phase {
+      flex: 1 1 0;
+      min-width: 250px;
+      max-width: 320px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .phase-label {
+      font-family: 'Fredoka One', cursive;
+      color: var(--white);
+      -webkit-text-stroke: 2px var(--black);
+      text-shadow: 3px 3px 0 var(--black);
+      font-size: 34px;
+      margin-bottom: 28px;
+      letter-spacing: 1px;
+    }
+
+    .phase-card {
+      background: rgba(255, 255, 255, 0.92);
+      border: 4px solid var(--black);
+      border-radius: 24px;
+      padding: 22px;
+      box-shadow: 6px 6px 0 var(--black);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 14px;
+      flex: 1;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  box-shadow 0.25s ease;
+    }
+
+    .phase-card:hover {
+      transform: translate(-5px, -5px) rotate(-1deg);
+      box-shadow: 12px 12px 0 var(--black);
+    }
+
+    .phase:nth-child(even) .phase-card:hover {
+      transform: translate(-5px, -5px) rotate(1deg);
+    }
+
+    .phase-pill {
+      background: var(--yellow);
+      border: 3px solid var(--black);
+      border-radius: 999px;
+      padding: 14px 18px;
+      font-weight: 800;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--black);
+      line-height: 1.3;
+    }
+
+    .roadmap-character {
+      width: 230px;
+      margin: 55px auto 0;
+    }
+
+    .roadmap-character img {
+      width: 100%;
+      height: auto;
+      display: block;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 20px;
+      border: 4px solid var(--black);
+      background: var(--white);
+      animation: frameGlow 2.6s ease-in-out infinite;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      cursor: pointer;
+    }
+
+    .roadmap-character img:hover {
+      animation-play-state: paused;
+      transform: scale(1.04);
+      box-shadow: 8px 8px 0 var(--black), 0 0 40px 14px var(--glow);
+    }
+
+    /* ---------- Ticker ---------- */
+    .ticker {
+      background: var(--yellow);
+      border-top: 3px solid var(--black);
+      border-bottom: 3px solid var(--black);
+      overflow: hidden;
+      padding: 18px 0;
+    }
+
+    .ticker-track {
+      display: flex;
+      gap: 40px;
+      white-space: nowrap;
+      animation: scroll 30s linear infinite;
+      width: max-content;
+    }
+
+    .ticker-item {
+      color: var(--black);
+      font-weight: 900;
+      font-size: 22px;
+      letter-spacing: 3px;
+    }
+
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ---------- Footer ---------- */
+    .footer {
+      background: var(--yellow);
+      padding: 60px 40px 30px;
+      text-align: center;
+      position: relative;
+    }
+
+    .footer-character {
+      width: 180px;
+      margin: 0 auto 10px;
+    }
+
+    .footer-logo {
+      font-size: 56px;
+      margin-bottom: 24px;
+    }
+
+    .footer-address {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--black);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 6px 6px 6px 22px;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      margin-bottom: 28px;
+      max-width: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .footer-address::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.12),
+        transparent
+      );
+      animation: shimmer 4s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .footer-buttons {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      margin-bottom: 50px;
+      flex-wrap: wrap;
+    }
+
+    .footer-credit {
+      border-top: 2px solid var(--black);
+      padding-top: 24px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    /* ---------- Scroll Reveal Animations ---------- */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 900px) {
+      .hero {
+        padding: 40px 24px 60px;
+        min-height: auto;
+      }
+      .hero-content { margin: 0 auto; }
+      .hero-logo {
+        font-size: 80px;
+        text-shadow: 4px 4px 0 var(--black);
+      }
+      .hero-tagline { font-size: 22px; }
+      .hero-character {
+        width: 240px;
+        max-width: 65vw;
+        margin-top: 28px;
+      }
+      .hero-buttons { justify-content: center; }
+      .address-text { max-width: 200px; }
+      .memes-section { padding: 60px 20px 80px; }
+      .memes-title { font-size: 64px; margin-bottom: 40px; }
+      .memes-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+      .tokenomics-section { padding: 60px 20px 80px; }
+      .tokenomics-title { font-size: 56px; }
+      .tokenomics-content { gap: 36px; }
+      .ca-address { max-width: 160px; }
+      .roadmap-section { padding: 60px 20px 50px; }
+      .roadmap-title { font-size: 56px; margin-bottom: 50px; }
+      .roadmap-phases { gap: 50px; }
+      .phase { max-width: 100%; }
+      .phase-label { font-size: 30px; margin-bottom: 36px; }
+      .navbar { padding: 14px 20px; }
+      .nav-links { gap: 16px; }
+      .nav-link { font-size: 14px; }
+      .nav-btn { padding: 8px 16px; font-size: 13px; }
+      .nav-logo { font-size: 26px; }
+      .footer { padding: 50px 20px 24px; }
+      .footer-logo { font-size: 42px; }
+    }
+
+    @media (max-width: 500px) {
+      .memes-grid { grid-template-columns: 1fr; }
+      .hero-logo { font-size: 64px; }
+      .nav-links { gap: 10px; }
+      .nav-link { display: none; }
+    }
+
+    /* Respect reduced motion preference */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="cursive-logo nav-logo">Glom</div>
+    <div class="nav-links">
+      <a href="https://x.com/GlomOnHype" target="_blank" rel="noopener" class="nav-link">Community</a>
+      <a href="#memes" class="nav-link">Memes</a>
+      <a href="#tokenomics" class="nav-link">Tokenomics</a>
+      <a href="#roadmap" class="nav-link">Roadmap</a>
+      <a href="#buy" class="nav-btn">Buy with HYPE</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+
+    <div class="hero-content">
+      <h1 class="cursive-logo hero-logo">Glom</h1>
+      <p class="hero-tagline">$GLOM &ndash; THE HYPEREVM CHAMELEON</p>
+      <p class="hero-subtagline">Live on HyperEVM &middot; Buy with $HYPE</p>
+
+      <div class="address-pill">
+        <span class="address-text" id="address">coming soon</span>
+        <button class="copy-btn" id="copyBtn" onclick="copyAddress()">
+          <span id="copyLabel">Copy</span>
+        </button>
+      </div>
+
+      <div class="hero-buttons">
+        <a href="https://x.com/GlomOnHype" target="_blank" rel="noopener" id="community" class="btn btn-yellow">Community</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="ticker">
+    <div class="ticker-track">
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+    </div>
+  </div>
+
+  <section class="memes-section" id="memes">
+    <h2 class="cursive-logo memes-title reveal">Memes</h2>
+    <div class="memes-grid">
+      <div class="meme-card reveal"><img src="meme1.png" alt="Glom meme 1" /></div>
+      <div class="meme-card reveal"><img src="meme2.png" alt="Glom meme 2" /></div>
+      <div class="meme-card reveal"><img src="meme3.png" alt="Glom meme 3" /></div>
+      <div class="meme-card reveal"><img src="meme4.png" alt="Glom meme 4" /></div>
+      <div class="meme-card reveal"><img src="meme5.png" alt="Glom meme 5" /></div>
+      <div class="meme-card reveal"><img src="meme6.png" alt="Glom meme 6" /></div>
+      <div class="meme-card reveal"><img src="meme7.png" alt="Glom meme 7" /></div>
+      <div class="meme-card reveal"><img src="meme8.png" alt="Glom meme 8" /></div>
+      <div class="meme-card reveal"><img src="meme9.png" alt="Glom meme 9" /></div>
+      <div class="meme-card reveal"><img src="meme10.png" alt="Glom meme 10" /></div>
+      <div class="meme-card reveal"><img src="meme11.png" alt="Glom meme 11" /></div>
+      <div class="meme-card reveal"><img src="meme12.png" alt="Glom meme 12" /></div>
+    </div>
+  </section>
+
+  <div class="ticker">
+    <div class="ticker-track">
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+    </div>
+  </div>
+
+  <!-- Tokenomics Section -->
+  <section class="tokenomics-section" id="tokenomics">
+    <div class="tokenomics-content">
+      <div class="tokenomics-stack">
+        <h2 class="cursive-logo tokenomics-title reveal">Tokenomics</h2>
+        <div class="tokenomics-card reveal">
+        <div class="token-pill">Built on HyperEVM</div>
+        <div class="token-pill">Buy with $HYPE</div>
+        <div class="token-pill">1B Total Supply</div>
+        <div class="token-pill">0% Tax</div>
+        <div class="token-pill">Mint Revoked</div>
+        <div class="token-pill">Fair Launch</div>
+      </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ticker">
+    <div class="ticker-track">
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+    </div>
+  </div>
+
+  <!-- Roadmap Section -->
+  <section class="roadmap-section" id="roadmap">
+    <h2 class="cursive-logo roadmap-title reveal">Roadmap</h2>
+    <div class="roadmap-phases">
+      <div class="phase reveal">
+        <div class="phase-label">Phase 1</div>
+        <div class="phase-card">
+          <div class="phase-pill">Burn Tokens</div>
+        </div>
+      </div>
+      <div class="phase reveal">
+        <div class="phase-label">Phase 2</div>
+        <div class="phase-card">
+          <div class="phase-pill">1000+ Holders</div>
+          <div class="phase-pill">Top of HyperEVM Gainers</div>
+          <div class="phase-pill">Community Spaces + Marketing</div>
+        </div>
+      </div>
+      <div class="phase reveal">
+        <div class="phase-label">Phase 3</div>
+        <div class="phase-card">
+          <div class="phase-pill">Community Giveaways</div>
+          <div class="phase-pill">Reach 1M+ Market Cap</div>
+          <div class="phase-pill">Build With Our Community</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ticker">
+    <div class="ticker-track">
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+      <span class="ticker-item">$GLOM</span><span class="ticker-item">•</span>
+    </div>
+  </div>
+
+  <script>
+    function copyAddress() {
+      const addr = document.getElementById('address').innerText;
+      const btn = document.getElementById('copyBtn');
+      const label = document.getElementById('copyLabel');
+
+      if (addr.toLowerCase().includes('coming soon')) {
+        label.innerText = 'Soon';
+        setTimeout(() => { label.innerText = 'Copy'; }, 1500);
+        return;
+      }
+
+      navigator.clipboard.writeText(addr).then(() => {
+        btn.classList.add('copied');
+        label.innerText = 'Copied!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          label.innerText = 'Copy';
+        }, 1500);
+      }).catch(() => {
+        const ta = document.createElement('textarea');
+        ta.value = addr;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        label.innerText = 'Copied!';
+        setTimeout(() => { label.innerText = 'Copy'; }, 1500);
+      });
+    }
+
+    // Copy the tokenomics contract address
+    function copyCA() {
+      const addr = document.getElementById('caAddress').innerText;
+      const label = document.getElementById('caCopyLabel');
+      if (addr.toLowerCase().includes('coming soon')) {
+        label.innerText = 'Soon';
+        setTimeout(() => { label.innerText = 'Copy'; }, 1500);
+        return;
+      }
+      navigator.clipboard.writeText(addr).then(() => {
+        label.innerText = 'Copied!';
+        setTimeout(() => { label.innerText = 'Copy'; }, 1500);
+      }).catch(() => {
+        const ta = document.createElement('textarea');
+        ta.value = addr;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        label.innerText = 'Copied!';
+        setTimeout(() => { label.innerText = 'Copy'; }, 1500);
+      });
+    }
+
+    // Scroll reveal with staggered timing for natural rhythm
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('in-view');
+          }, i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
